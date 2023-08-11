@@ -1,19 +1,40 @@
-def jogar():
+import random
+
+def imprime_mensagem_abertura():
     print("*********************************")
     print("***Bem vindo ao jogo da Forca!***")
     print("*********************************")
 
-    palavra_secreta = "ovo".upper()
-    letras_acertadas = ["_" for letra in palavra_secreta]
+def carrega_palavra_secreta():
+    arquivo = open("E:\Python\Alura\python-alura\jogos\palavras.txt","r")
+    palavras = []
+
+    for linha in arquivo:
+        linha = linha.strip()
+        palavras.append(linha)
+
+    arquivo.close()
+
+    index_palavra = random.randrange(0, len(palavras))
+
+    palavra_secreta = palavras[index_palavra].upper()
+
+    return palavra_secreta
+
+def inicializa_letras_acertadas(palavra):
+    return ["_" for letra in palavra]
+
+def jogar():
+
+    imprime_mensagem_abertura()
+    palavra_secreta = carrega_palavra_secreta()
+    letras_acertadas = inicializa_letras_acertadas(palavra_secreta)
 
     enforcou = False
     acertou = False
     erros = 0
 
     print(letras_acertadas)
-
-    # for letra in palavra_secreta:
-    #         letras_acertadas.append('_')
 
     while(not enforcou and not acertou):
 
