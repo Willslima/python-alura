@@ -8,15 +8,20 @@ class Conta:
     def extrato(self):
         print('O seu saldo é R${}'.format(self.__saldo))
 
-
-
     def deposito(self, valor):
         self.__saldo += valor
         print('Agora o seu saldo é {}'.format(self.__saldo))
 
+    def __saque_disponivel(self, valor_a_sacar):
+        valor_disponivel_a_sacar = self.__saldo + self.__limite
+        return valor_a_sacar <= valor_disponivel_a_sacar
+
     def saque(self, valor):
-        self.__saldo -= valor
-        print('Agora o seu saldo é {}'.format(self.__saldo))
+        if(self.__saque_disponivel(valor)):
+            self.__saldo -= valor
+            print('Agora o seu saldo é R${}'.format(self.__saldo))
+        else:
+            print("O valor solicitado de R${} é maior que o saldo/limite !!!".format(valor))
 
     def transferir(self, valor, destino):
         self.saque(valor)
@@ -24,8 +29,7 @@ class Conta:
         
     def get_saldo(self):
         return self.__saldo
-
-    
+   
     def titular(self):
         return self.__titular
     
@@ -36,9 +40,14 @@ class Conta:
     @limite.setter
     def limite(self, limite):
         self.__limite = limite
+
+    @staticmethod
+    def codigo_banco():
+        return 'O código é 001'
     
 conta = Conta(1,'will',100)
 conta2 = Conta(2,'willian',100)
 
-conta.limite = 2500
-conta.limite
+conta.limite = 500
+
+print(Conta.codigo_banco())
